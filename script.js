@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const width = 10 //in onze grid passen maximaal 10 pixels op een rijtje, omdat deze 200 breed is en de pixels 20x20 zijn.
     let nextRandom = 0;
     let timerId
+    let score = 0;
 
     //de tetrisvormpjes (tetromino)
     const lTetromino = [ //L vormpje
@@ -100,28 +101,27 @@ document.addEventListener('DOMContentLoaded', () => {
             currentPosition = 4
             draw()
             displayShape()
+            addScore()
         }
     }
 
     //tetromino mag naar links, tenzij hij de rand raakt van de grid of er een blokkade is
-    function moveLeft(){
+    function moveLeft() {
         undraw()
-        const isAtLeftEdge = current.some(index => (currentPosition+index)%width === 0)
-
+        const isAtLeftEdge = current.some(index => (currentPosition + index) % width === 0)
         if(!isAtLeftEdge) currentPosition -=1
-        if(current.some(index => squares[currentPosition.index].classList.contains('taken'))){
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition +=1
         }
         draw()
     }
 
     //tetromino mag naar rechts, tenzij hij de rand raakt van de grid of er een blokkade is
-    function moveRight(){
+    function moveRight() {
         undraw()
-        const isAtRightEdge = current.some(index=> (currentPosition + index) % width === width -1)
-
+        const isAtRightEdge = current.some(index => (currentPosition + index) % width === width -1)
         if(!isAtRightEdge) currentPosition +=1
-        if(current.some(index => squares[currentPosition.index].classList.contains(('taken')))){
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))) {
             currentPosition -=1
         }
         draw()
@@ -174,4 +174,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // displayShape()
         }
     })
+
+    //score toevoegen
+    function addScore(){
+        for(let i=0; i < 199; i+=width){
+            const row = [i, i+1, i+2, i+3, i+4, i+5, i+6, i+7, i+8, i+9]
+
+            if(row.every(index => squares[index].classList.contains('taken'))){ //als een rij vol is
+                score += 10 //telt score op
+                scoreDisplay.innerHTML = score //laat score zien
+                row.forEach(index => {
+                    squares[index].classList.remove('taken')
+                    squares[index].classList.remove('tetromino')
+                    squares[index].style.backgroundColor = ''
+                })
+                const squaresRemoved = squares.splice(i,width) //laat rij verdwijnen
+                squares = squaresRemoved.concat(squares)
+                squares.forEach(cell => grid.appendChild(cell))
+            }
+        }
+    }
 })

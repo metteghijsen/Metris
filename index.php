@@ -6,12 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="style.css">
-    <title>Tetris</title>
+    <link rel="icon" href="img/icon.png">
+    <title>Metris</title>
 </head>
 <body>
 
 <div class="container">
-    <img src="tetrislogo.png" alt="tetrislogo">
+    <img src="img/tetrislogo.png" alt="tetrislogo">
     <button id="start-button">START/PAUSE</button>
     <button id="mute-button">TOGGLE MUSIC</button>
 </div>

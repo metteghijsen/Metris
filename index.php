@@ -10,10 +10,14 @@
 </head>
 <body>
 
-<h3>Score:<span id="score">0</span></h3>
-<button id="start-button">Start/Pause</button>
-
 <div class="container">
+    <img src="tetrislogo.png" alt="tetrislogo">
+    <button id="start-button">START/PAUSE</button>
+    <button id="mute-button">TOGGLE MUSIC</button>
+</div>
+
+<div class="container2">
+    <h3 class="score">SCORE: <span id="score"> 0 </span></h3>
     <div class="grid">
         <div></div>
         <div></div>

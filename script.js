@@ -1,12 +1,21 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const music = new Audio('Tetris.mp3');
     const grid = document.querySelector('.grid') //maakt variabele van de grid
     let squares = Array.from(document.querySelectorAll('.grid div')) //maakt array van alle div's (vierkantjes)
     const scoreDisplay = document.querySelector('#score')
     const startBtn = document.querySelector('#start-button')
+    const muteBtn = document.querySelector('#mute-button')
     const width = 10 //in onze grid passen maximaal 10 pixels op een rijtje, omdat deze 200 breed is en de pixels 20x20 zijn.
     let nextRandom = 0;
     let timerId
     let score = 0;
+    const colors = [
+        '#f8f875',
+        '#ff6363',
+        '#B28DFF',
+        '#41b34a',
+        '#6EB5FF'
+    ]
 
     //de tetrisvormpjes (tetromino)
     const lTetromino = [ //L vormpje
@@ -56,13 +65,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function draw(){
         current.forEach(index=> {
             squares[currentPosition + index].classList.add('tetromino')
+            squares[currentPosition + index].style.backgroundColor = colors[random]
         })
     }
 
     //haal tetromino weg
     function undraw(){
-        current.forEach(index =>
-        squares[currentPosition + index].classList.remove('tetromino'))
+        current.forEach(index =>{
+            squares[currentPosition + index].classList.remove('tetromino')
+            squares[currentPosition + index].style.backgroundColor = ''
+        })
     }
 
     //functies toevoegen aan toetsen
@@ -102,6 +114,7 @@ document.addEventListener('DOMContentLoaded', () => {
             draw()
             displayShape()
             addScore()
+            gameOver()
         }
     }
 
@@ -157,12 +170,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         displaySquares.forEach(square=>{
             square.classList.remove('tetromino')
+            square.style.backgroundColor = ''
         })
-        upNextTetrominoes[nextRandom].forEach(index =>
-        displaySquares[displayIndex + index].classList.add('tetromino'))
+        upNextTetrominoes[nextRandom].forEach(index => {
+
+            displaySquares[displayIndex + index].classList.add('tetromino')
+            displaySquares[displayIndex + index].style.backgroundColor = colors[nextRandom]
+        })
     }
 
-    //functie toevoegen aan de start en stop knop
+    //functie toevoegen aan de start/pauze knop
     startBtn.addEventListener('click',() =>{
         if(timerId){
             clearInterval(timerId)
@@ -172,6 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
             timerId = setInterval(moveDown, 1000)
             // nextRandom = Math.floor(Math.random()*theTetrominoes.length)
             // displayShape()
+        }
+    })
+
+    muteBtn.addEventListener('click', () =>{
+        if(music.paused){
+            music.play()
+        }
+        else{
+            music.pause()
         }
     })
 
@@ -192,6 +218,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 squares = squaresRemoved.concat(squares)
                 squares.forEach(cell => grid.appendChild(cell))
             }
+        }
+    }
+
+    //game over
+    function gameOver(){
+        if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
+            scoreDisplay.innerHTML = 'end'
+            clearInterval(timerId)
+            music.pause()
         }
     }
 })

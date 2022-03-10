@@ -112,8 +112,8 @@ document.addEventListener('DOMContentLoaded', () => {
             current = theTetrominoes[random][currentRotation]
             currentPosition = 4
             draw()
-            displayShape()
             addScore()
+            displayShape()
             gameOver()
         }
     }

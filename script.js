@@ -17,6 +17,18 @@ document.addEventListener('DOMContentLoaded', () => {
         '#6EB5FF'
     ]
 
+    if (typeof music.loop == 'boolean')
+    {
+        music.loop = true;
+    }
+    else
+    {
+        music.addEventListener('ended', function() {
+            this.currentTime = 0;
+            this.play();
+        }, false);
+    }
+
     //de tetrisvormpjes (tetromino)
     const lTetromino = [ //L vormpje
         [1, width+1, width*2+1, 2], //rotatie 1
@@ -111,8 +123,8 @@ document.addEventListener('DOMContentLoaded', () => {
             nextRandom = Math.floor(Math.random()* theTetrominoes.length)
             current = theTetrominoes[random][currentRotation]
             currentPosition = 4
-            draw()
             addScore()
+            draw()
             displayShape()
             gameOver()
         }
@@ -226,7 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(current.some(index => squares[currentPosition + index].classList.contains('taken'))){
             scoreDisplay.innerHTML = 'end'
             clearInterval(timerId)
-            music.pause()
         }
     }
 })

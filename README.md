@@ -8,5 +8,5 @@ What you see in front of you here is actually an old-fashioned game of Tetris. I
 - ↓ or S: Move your tetromino down
 - → or D: Move your tetromino right
 
-## Link to the tutorial
+## Link to the tutorial I used
 https://www.youtube.com/watch?v=rAUn1Lom6dw

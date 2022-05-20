@@ -26,6 +26,8 @@ You complete lines by moving the differently shaped pieces (tetrominoes) that ap
 ## Architecture
 The main page (index.php) consists of a very large grid of 200 pixels (20x10).  And a mini-grid of 16 pixels (4x4).
 
+All states that a pixel can be in are described in the CSS file (style.css). The state of each pixel is determined in the JavaScript file.
+
 The JavaScript file (script.js), determines the filling of this grid. All the different shapes and rotations of the tetrominoes are defined in this file. These are calculated in advance by noting the coordinates of each shape. When a user chooses to rotate a tetromino by using the keys on the keyboard, this user actually goes through an array of determined shapes. Making sure these shapes fall is just a matter of re-calculating every few seconds the location within the grid. 
 The illusion of moving and falling shapes is created by adding a certain class to a pixel in the JavaScript file and then removing it. 
 
